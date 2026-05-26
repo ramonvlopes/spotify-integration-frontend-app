@@ -16,11 +16,11 @@ export function FavoritesScreen() {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="max-w-7xl mx-auto px-4 py-8 flex flex-col gap-10">
-        <h1 className="text-2xl font-bold text-text-primary">{t('favorites')}</h1>
+        <h1 className="font-display text-3xl font-bold text-gradient">{t('favorites')}</h1>
         {!hasFavorites && <EmptyState message={t('noFavorites')} icon={<HeartIcon />} />}
         {favoriteArtists.length > 0 && (
           <section>
-            <h2 className="text-lg font-semibold text-text-secondary mb-4">
+            <h2 className="font-display text-lg font-semibold text-text-secondary mb-5">
               {t('favoriteArtists')}
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
@@ -41,7 +41,7 @@ export function FavoritesScreen() {
         )}
         {favoriteAlbums.length > 0 && (
           <section>
-            <h2 className="text-lg font-semibold text-text-secondary mb-4">
+            <h2 className="font-display text-lg font-semibold text-text-secondary mb-5">
               {t('favoriteAlbums')}
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">

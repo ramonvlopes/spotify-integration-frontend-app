@@ -14,7 +14,8 @@ export function ArtistListScreen() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="max-w-7xl mx-auto px-4 py-8 flex flex-col gap-6">
+      <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/[0.04] rounded-full blur-[100px] pointer-events-none" />
+      <main className="relative max-w-7xl mx-auto px-4 sm:px-6 py-10 flex flex-col gap-8">
         <SearchBar />
         <ArtistGrid onTotalChange={setTotal} />
         <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={goToPage} />

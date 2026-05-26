@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SearchIcon } from '@/commons/icons'
 import { Input } from '@/components/Input'
-import { Button } from '@/components/Button'
 import { useSearchContext } from '@/context/SearchContext'
 import { SEARCH_ACTIONS } from '@/context/SearchContext'
 import { useDebounce } from '@/hooks/useDebounce'
@@ -24,22 +23,21 @@ export function SearchBar({ placeholder }: SearchBarProps) {
   }
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="flex gap-2">
-        <Button
-          variant={state.searchType === 'artist' ? 'primary' : 'ghost'}
-          size="sm"
-          onClick={() => handleTypeChange('artist')}
-        >
-          {t('searchByName')}
-        </Button>
-        <Button
-          variant={state.searchType === 'album' ? 'primary' : 'ghost'}
-          size="sm"
-          onClick={() => handleTypeChange('album')}
-        >
-          {t('searchByAlbum')}
-        </Button>
+    <div className="flex flex-col gap-4">
+      <div className="flex p-1 gap-1 bg-white/[0.04] border border-white/[0.07] rounded-2xl w-fit">
+        {(['artist', 'album'] as SearchType[]).map((type) => (
+          <button
+            key={type}
+            onClick={() => handleTypeChange(type)}
+            className={`px-4 py-1.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+              state.searchType === type
+                ? 'bg-primary text-black shadow-glow-green-sm'
+                : 'text-text-secondary hover:text-text-primary'
+            }`}
+          >
+            {type === 'artist' ? t('searchByName') : t('searchByAlbum')}
+          </button>
+        ))}
       </div>
       <Input
         value={inputValue}

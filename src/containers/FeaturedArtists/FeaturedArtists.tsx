@@ -22,14 +22,20 @@ export function FeaturedArtists() {
   const artists = results.flatMap((r) => (r.data ? [r.data] : []))
 
   return (
-    <section>
-      <h2 className="text-lg font-semibold text-text-secondary mb-4">{t('featuredArtists')}</h2>
+    <section className="flex flex-col gap-5">
+      <div className="flex items-center gap-3">
+        <h2 className="font-display font-bold text-xl text-gradient">{t('featuredArtists')}</h2>
+        <div className="flex-1 h-px bg-gradient-to-r from-primary/20 to-transparent" />
+      </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {isLoading &&
           Array.from({ length: FEATURED_ARTIST_IDS.length }).map((_, i) => (
-            <div key={i} className="rounded-xl overflow-hidden bg-surface border border-border">
+            <div
+              key={i}
+              className="rounded-2xl overflow-hidden bg-surface border border-white/[0.07]"
+            >
               <Skeleton className="aspect-square w-full" />
-              <div className="p-3 flex flex-col gap-2">
+              <div className="p-3.5 flex flex-col gap-2">
                 <Skeleton height="14px" width="80%" />
                 <Skeleton height="12px" width="60%" />
               </div>
