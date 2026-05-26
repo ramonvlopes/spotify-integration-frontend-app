@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { AppProvider } from '@/context/AppContext'
 import { SearchProvider } from '@/context/SearchContext'
 import { FavoritesProvider } from '@/context/FavoritesContext'
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 import { ArtistListScreen } from '@/screens/ArtistListScreen'
 import { ArtistDetailScreen } from '@/screens/ArtistDetailScreen'
 import { FavoritesScreen } from '@/screens/FavoritesScreen'
@@ -20,29 +21,31 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <AppProvider>
-          <FavoritesProvider>
-            <SearchProvider>
-              <Routes>
-                <Route path="/" element={<ArtistListScreen />} />
-                <Route path="/artists/:id" element={<ArtistDetailScreen />} />
-                <Route path="/favorites" element={<FavoritesScreen />} />
-              </Routes>
-              <ToastContainer
-                position="bottom-right"
-                theme="dark"
-                autoClose={4000}
-                hideProgressBar={false}
-                closeOnClick
-                pauseOnHover
-              />
-            </SearchProvider>
-          </FavoritesProvider>
-        </AppProvider>
-      </QueryClientProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+          <AppProvider>
+            <FavoritesProvider>
+              <SearchProvider>
+                <Routes>
+                  <Route path="/" element={<ArtistListScreen />} />
+                  <Route path="/artists/:id" element={<ArtistDetailScreen />} />
+                  <Route path="/favorites" element={<FavoritesScreen />} />
+                </Routes>
+                <ToastContainer
+                  position="bottom-right"
+                  theme="dark"
+                  autoClose={4000}
+                  hideProgressBar={false}
+                  closeOnClick
+                  pauseOnHover
+                />
+              </SearchProvider>
+            </FavoritesProvider>
+          </AppProvider>
+        </QueryClientProvider>
+      </BrowserRouter>
+    </ErrorBoundary>
   )
 }
 
