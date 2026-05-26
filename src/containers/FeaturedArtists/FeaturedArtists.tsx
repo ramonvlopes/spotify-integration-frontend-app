@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArtistCard } from '@/components/ArtistCard'
 import { Skeleton } from '@/components/Skeleton'
+import { EmptyState } from '@/components/EmptyState'
 import { getArtistById, FEATURED_ARTIST_IDS } from '@/services/artists'
 import { QUERY_KEYS } from '@/commons/constants'
 
@@ -15,11 +16,13 @@ export function FeaturedArtists() {
       queryKey: QUERY_KEYS.ARTIST(id),
       queryFn: () => getArtistById(id),
       staleTime: 1000 * 60 * 10,
+      retry: false,
     })),
   })
 
   const isLoading = results.some((r) => r.isLoading)
   const artists = results.flatMap((r) => (r.data ? [r.data] : []))
+  const allFailed = !isLoading && artists.length === 0
 
   return (
     <section className="flex flex-col gap-5">
@@ -55,6 +58,7 @@ export function FeaturedArtists() {
             />
           ))}
       </div>
+      {allFailed && <EmptyState message={t('searchPrompt')} />}
     </section>
   )
 }

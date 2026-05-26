@@ -48,8 +48,16 @@ export function setupInterceptors(instance: AxiosInstance): void {
     (response) => response,
     (error: unknown) => {
       if (isHttpError(error)) {
-        const message = extractErrorMessage(error)
-        toast.error(message)
+        const axiosError = error as { response?: { status?: number } }
+        const status = axiosError.response?.status ?? 0
+        const toastId = `http-${status}`
+        if (!toast.isActive(toastId)) {
+          const message =
+            status === 429
+              ? 'Too many requests — please wait a moment and try again'
+              : extractErrorMessage(error)
+          toast.error(message, { toastId })
+        }
       }
       return Promise.reject(error)
     },

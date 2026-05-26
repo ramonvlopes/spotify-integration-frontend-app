@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { AlbumCard } from '@/components/AlbumCard'
 import { Skeleton } from '@/components/Skeleton'
+import { EmptyState } from '@/components/EmptyState'
 import { getAlbumById } from '@/services/albums'
 import { QUERY_KEYS } from '@/commons/constants'
 
@@ -28,11 +29,13 @@ export function FeaturedAlbums() {
       queryKey: QUERY_KEYS.ALBUM(id),
       queryFn: () => getAlbumById(id),
       staleTime: 1000 * 60 * 10,
+      retry: false,
     })),
   })
 
   const isLoading = results.some((r) => r.isLoading)
   const albums = results.flatMap((r) => (r.data ? [r.data] : []))
+  const allFailed = !isLoading && albums.length === 0
 
   return (
     <section className="flex flex-col gap-5">
@@ -69,6 +72,7 @@ export function FeaturedAlbums() {
             />
           ))}
       </div>
+      {allFailed && <EmptyState message={t('searchPrompt')} />}
     </section>
   )
 }
