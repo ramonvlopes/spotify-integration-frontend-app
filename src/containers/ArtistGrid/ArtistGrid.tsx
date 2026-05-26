@@ -6,7 +6,7 @@ import { ArtistCard } from '@/components/ArtistCard'
 import { Skeleton } from '@/components/Skeleton'
 import { EmptyState } from '@/components/EmptyState'
 import { ErrorState } from '@/components/ErrorState'
-import { SearchIcon } from '@/commons/icons'
+import { FeaturedArtists } from '@/containers/FeaturedArtists'
 import { searchArtists, searchArtistsByAlbum } from '@/services/artists'
 import { QUERY_KEYS } from '@/commons/constants'
 import { useSearchContext } from '@/context/SearchContext'
@@ -41,7 +41,7 @@ export function ArtistGrid({ onTotalChange }: ArtistGridProps) {
   }, [data?.total, onTotalChange])
 
   if (!enabled) {
-    return <EmptyState message={t('searchPrompt')} icon={<SearchIcon />} />
+    return <FeaturedArtists />
   }
 
   if (isLoading) {

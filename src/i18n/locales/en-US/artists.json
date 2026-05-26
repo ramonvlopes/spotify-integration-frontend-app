@@ -9,5 +9,6 @@
   "topTracks": "Top Tracks",
   "discography": "Discography",
   "noArtists": "No artists found. Try a different search.",
-  "searchPrompt": "Search for an artist or album to get started"
+  "searchPrompt": "Search for an artist or album to get started",
+  "featuredArtists": "Featured Artists"
 }

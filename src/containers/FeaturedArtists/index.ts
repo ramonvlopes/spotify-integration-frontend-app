@@ -1,0 +1,1 @@
+export { FeaturedArtists } from './FeaturedArtists'

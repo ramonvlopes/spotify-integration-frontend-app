@@ -7,4 +7,5 @@ export const QUERY_KEYS = {
   ARTIST_ALBUMS_CHART: (id: string) => ['artist', id, 'albums', 'chart'] as const,
   ALBUM: (id: string) => ['album', id] as const,
   ALBUM_TRACKS: (id: string, page: number) => ['album', id, 'tracks', page] as const,
+  FEATURED_ARTISTS: () => ['artists', 'featured'] as const,
 } as const

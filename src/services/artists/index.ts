@@ -5,6 +5,7 @@ export {
   getArtistTopTracks,
   getArtistAlbums,
 } from './artists'
+export { FEATURED_ARTIST_IDS } from './artists.constants'
 export type {
   Artist,
   Track,
