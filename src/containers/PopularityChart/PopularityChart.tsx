@@ -11,7 +11,7 @@ export function PopularityChart({ artistId }: PopularityChartProps) {
   const { t: tAlbums } = useTranslation('albums')
 
   const { data, isLoading } = useQuery({
-    queryKey: QUERY_KEYS.ARTIST_ALBUMS(artistId, 1),
+    queryKey: QUERY_KEYS.ARTIST_ALBUMS_CHART(artistId),
     queryFn: () => getArtistAlbums({ artistId, limit: 10, offset: 0 }),
     staleTime: 1000 * 60 * 5,
   })

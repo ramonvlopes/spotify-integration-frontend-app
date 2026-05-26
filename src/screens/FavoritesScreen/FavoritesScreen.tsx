@@ -19,13 +19,17 @@ export function FavoritesScreen() {
     setFavorites([newFavorite, ...favorites])
   }
 
+  const handleRemove = (id: string) => {
+    setFavorites(favorites.filter((f) => f.id !== id))
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
       <main className="max-w-3xl mx-auto px-4 py-8 flex flex-col gap-8">
         <h1 className="text-2xl font-bold text-text-primary">{t('title')}</h1>
         <FavoritesForm onAdd={handleAdd} />
-        <FavoritesList />
+        <FavoritesList favorites={favorites} onRemove={handleRemove} />
       </main>
     </div>
   )
