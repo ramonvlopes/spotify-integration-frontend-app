@@ -6,6 +6,7 @@ import { AppProvider } from '@/context/AppContext'
 import { SearchProvider } from '@/context/SearchContext'
 import { ArtistListScreen } from '@/screens/ArtistListScreen'
 import { ArtistDetailScreen } from '@/screens/ArtistDetailScreen'
+import { FavoritesScreen } from '@/screens/FavoritesScreen'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,6 +26,7 @@ function App() {
             <Routes>
               <Route path="/" element={<ArtistListScreen />} />
               <Route path="/artists/:id" element={<ArtistDetailScreen />} />
+              <Route path="/favorites" element={<FavoritesScreen />} />
             </Routes>
             <ToastContainer
               position="bottom-right"
