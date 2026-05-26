@@ -1,4 +1,4 @@
-import { useQueries } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArtistCard } from '@/components/ArtistCard'
@@ -11,20 +11,33 @@ export function FeaturedArtists() {
   const { t } = useTranslation('artists')
   const navigate = useNavigate()
 
-  const results = useQueries({
-    queries: FEATURED_ARTIST_IDS.map((id, index) => ({
-      queryKey: QUERY_KEYS.ARTIST(id),
-      queryFn: async () => {
-        if (index > 0) await new Promise((r) => setTimeout(r, index * 300))
-        return getArtistById(id)
-      },
-      staleTime: 1000 * 60 * 10,
-      retry: false,
-    })),
+  const { data: artists = [], isLoading } = useQuery({
+    queryKey: QUERY_KEYS.FEATURED_ARTISTS(),
+    queryFn: async ({ signal }) => {
+      const results = []
+      for (const id of FEATURED_ARTIST_IDS) {
+        if (signal?.aborted) break
+        try {
+          const artist = await getArtistById(id)
+          results.push(artist)
+        } catch {
+          // skip individual failures and continue
+        }
+        if (!signal?.aborted) {
+          await new Promise<void>((resolve) => {
+            const timer = setTimeout(resolve, 300)
+            signal?.addEventListener('abort', () => clearTimeout(timer), { once: true })
+          })
+        }
+      }
+      if (results.length === 0) throw new Error('rate_limited')
+      return results
+    },
+    staleTime: 1000 * 60 * 10,
+    retry: 1,
+    retryDelay: 30_000,
   })
 
-  const isLoading = results.some((r) => r.isLoading)
-  const artists = results.flatMap((r) => (r.data ? [r.data] : []))
   const allFailed = !isLoading && artists.length === 0
 
   return (

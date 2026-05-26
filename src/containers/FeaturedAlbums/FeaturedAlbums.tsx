@@ -1,4 +1,4 @@
-import { useQueries } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { AlbumCard } from '@/components/AlbumCard'
@@ -24,20 +24,33 @@ export function FeaturedAlbums() {
   const { t } = useTranslation('artists')
   const navigate = useNavigate()
 
-  const results = useQueries({
-    queries: FEATURED_ALBUM_IDS.map((id, index) => ({
-      queryKey: QUERY_KEYS.ALBUM(id),
-      queryFn: async () => {
-        if (index > 0) await new Promise((r) => setTimeout(r, index * 300))
-        return getAlbumById(id)
-      },
-      staleTime: 1000 * 60 * 10,
-      retry: false,
-    })),
+  const { data: albums = [], isLoading } = useQuery({
+    queryKey: QUERY_KEYS.FEATURED_ALBUMS(),
+    queryFn: async ({ signal }) => {
+      const results = []
+      for (const id of FEATURED_ALBUM_IDS) {
+        if (signal?.aborted) break
+        try {
+          const album = await getAlbumById(id)
+          results.push(album)
+        } catch {
+          // skip individual failures and continue
+        }
+        if (!signal?.aborted) {
+          await new Promise<void>((resolve) => {
+            const timer = setTimeout(resolve, 300)
+            signal?.addEventListener('abort', () => clearTimeout(timer), { once: true })
+          })
+        }
+      }
+      if (results.length === 0) throw new Error('rate_limited')
+      return results
+    },
+    staleTime: 1000 * 60 * 10,
+    retry: 1,
+    retryDelay: 30_000,
   })
 
-  const isLoading = results.some((r) => r.isLoading)
-  const albums = results.flatMap((r) => (r.data ? [r.data] : []))
   const allFailed = !isLoading && albums.length === 0
 
   return (
@@ -68,8 +81,7 @@ export function FeaturedAlbums() {
               key={album.id}
               album={album}
               onClick={(albumId) => {
-                const found = results.find((r) => r.data?.id === albumId)?.data
-                const artistId = found?.artists?.[0]?.id
+                const artistId = album.id === albumId ? album.artists?.[0]?.id : undefined
                 if (artistId) navigate(`/artists/${artistId}`)
               }}
             />
