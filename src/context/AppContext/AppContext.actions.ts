@@ -1,0 +1,4 @@
+export const APP_ACTIONS = {
+  SET_LANGUAGE: 'SET_LANGUAGE',
+  SET_SEARCH_TYPE: 'SET_SEARCH_TYPE',
+} as const
