@@ -24,7 +24,7 @@ describe('ArtistCard', () => {
   it('calls onClick with artist id when clicked', () => {
     const onClick = vi.fn()
     render(<ArtistCard {...defaultProps} onClick={onClick} />)
-    fireEvent.click(screen.getByRole('button'))
+    fireEvent.click(screen.getByRole('button', { name: /Radiohead/i }))
     expect(onClick).toHaveBeenCalledWith('artist-1')
   })
 

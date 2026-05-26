@@ -7,6 +7,7 @@ export {
   FaChevronRight as ChevronRightIcon,
   FaStar as StarIcon,
   FaHeart as HeartIcon,
+  FaRegHeart as HeartOutlineIcon,
   FaTrash as TrashIcon,
   FaExternalLinkAlt as ExternalLinkIcon,
   FaSpinner as SpinnerIcon,

@@ -8,6 +8,12 @@
   "seeOnSpotify": "Ver no Spotify",
   "language": "Idioma",
   "favorites": "Favoritos",
+  "addToFavorites": "Adicionar aos favoritos",
+  "removeFromFavorites": "Remover dos favoritos",
+  "favoritesDisabledTooltip": "Favorite um artista ou álbum para acessar",
+  "favoriteArtists": "Artistas Favoritos",
+  "favoriteAlbums": "Álbuns Favoritos",
+  "noFavorites": "Nenhum favorito ainda. Clique no ♥ em qualquer artista ou álbum.",
   "pagination": {
     "previous": "Anterior",
     "next": "Próximo",

@@ -1,16 +1,32 @@
-import { DiscIcon } from '@/commons/icons'
+import { useTranslation } from 'react-i18next'
+import { DiscIcon, HeartIcon, HeartOutlineIcon } from '@/commons/icons'
+import { useFavorites } from '@/context/FavoritesContext'
 import type { AlbumCardProps } from './AlbumCard.types'
 
 export function AlbumCard({ album, onClick }: AlbumCardProps) {
+  const { t } = useTranslation()
+  const { isAlbumFavorited, toggleAlbum } = useFavorites()
   const year = album.release_date?.split('-')[0] ?? ''
   const imageUrl = album.images?.[0]?.url
+  const favorited = isAlbumFavorited(album.id)
+
+  const handleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    toggleAlbum({
+      id: album.id,
+      name: album.name,
+      imageUrl,
+      releaseDate: album.release_date,
+      totalTracks: album.total_tracks,
+    })
+  }
 
   return (
     <button
       onClick={() => onClick(album.id)}
       className="group w-full text-left bg-surface border border-border rounded-xl overflow-hidden hover:border-primary/40 hover:bg-surface-alt transition-all duration-200 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary/40"
     >
-      <div className="aspect-square overflow-hidden bg-surface-alt">
+      <div className="relative aspect-square overflow-hidden bg-surface-alt">
         {imageUrl ? (
           <img
             src={imageUrl}
@@ -22,6 +38,19 @@ export function AlbumCard({ album, onClick }: AlbumCardProps) {
             <DiscIcon className="text-3xl text-text-secondary" />
           </div>
         )}
+        <button
+          onClick={handleFavorite}
+          aria-label={favorited ? t('removeFromFavorites') : t('addToFavorites')}
+          className={`absolute top-2 right-2 p-1.5 rounded-full transition-all duration-200
+            ${
+              favorited
+                ? 'text-red-500 bg-background/70 opacity-100'
+                : 'text-white bg-background/50 opacity-0 group-hover:opacity-100'
+            }
+            hover:scale-110 focus:outline-none focus:opacity-100`}
+        >
+          {favorited ? <HeartIcon /> : <HeartOutlineIcon />}
+        </button>
       </div>
       <div className="p-3">
         <h4 className="font-medium text-text-primary text-sm truncate">{album.name}</h4>

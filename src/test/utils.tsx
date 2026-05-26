@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AppProvider } from '@/context/AppContext'
 import { SearchProvider } from '@/context/SearchContext'
+import { FavoritesProvider } from '@/context/FavoritesContext'
 import type { ReactNode } from 'react'
 
 function createTestQueryClient() {
@@ -22,7 +23,9 @@ function AllProviders({ children }: { children: ReactNode }) {
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <AppProvider>
-          <SearchProvider>{children}</SearchProvider>
+          <FavoritesProvider>
+            <SearchProvider>{children}</SearchProvider>
+          </FavoritesProvider>
         </AppProvider>
       </QueryClientProvider>
     </BrowserRouter>
