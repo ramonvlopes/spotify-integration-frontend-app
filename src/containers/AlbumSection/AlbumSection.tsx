@@ -11,7 +11,7 @@ import { QUERY_KEYS } from '@/commons/constants'
 import { AlbumTracksList } from './AlbumTracksList'
 import type { AlbumSectionProps } from './AlbumSection.types'
 
-const PAGE_SIZE = 20
+const PAGE_SIZE = 10
 
 export function AlbumSection({ artistId }: AlbumSectionProps) {
   const { t } = useTranslation('artists')

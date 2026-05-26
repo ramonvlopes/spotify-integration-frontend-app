@@ -3,27 +3,49 @@ import { useTranslation } from 'react-i18next'
 import { Table } from '@/components/Table'
 import type { TableColumn } from '@/components/Table'
 import { ErrorState } from '@/components/ErrorState'
+import { LoadingSpinner } from '@/components/LoadingSpinner'
 import { formatDuration } from '@/commons/helpers/formatDuration'
-import { getArtistTopTracks } from '@/services/artists'
+import { getArtistAlbums } from '@/services/artists'
+import { getAlbumTracks } from '@/services/albums'
 import { QUERY_KEYS } from '@/commons/constants'
-import type { Track } from '@/services/artists/artists.types'
+import type { AlbumTrack } from '@/services/albums/albums.types'
 import type { TopTracksSectionProps } from './TopTracksSection.types'
 
 export function TopTracksSection({ artistId }: TopTracksSectionProps) {
   const { t } = useTranslation('artists')
   const { t: tAlbums } = useTranslation('albums')
-  const {
-    data: tracks,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: QUERY_KEYS.ARTIST_TOP_TRACKS(artistId),
-    queryFn: () => getArtistTopTracks(artistId),
+
+  const { data: albumsData, isLoading: albumsLoading } = useQuery({
+    queryKey: QUERY_KEYS.ARTIST_ALBUMS(artistId, 1),
+    queryFn: () => getArtistAlbums({ artistId, limit: 1, offset: 0 }),
   })
 
-  if (isError) return <ErrorState />
+  const latestAlbum = albumsData?.items?.[0]
 
-  const columns: TableColumn<Track>[] = [
+  const {
+    data: tracksData,
+    isLoading: tracksLoading,
+    isError,
+  } = useQuery({
+    queryKey: latestAlbum ? QUERY_KEYS.ALBUM_TRACKS(latestAlbum.id, 1) : ['skip'],
+    queryFn: () => getAlbumTracks({ albumId: latestAlbum!.id, limit: 10, offset: 0 }),
+    enabled: !!latestAlbum,
+  })
+
+  if (albumsLoading || tracksLoading) {
+    return (
+      <section>
+        <h2 className="text-xl font-bold text-text-primary mb-4">{t('topTracks')}</h2>
+        <div className="flex justify-center py-8">
+          <LoadingSpinner />
+        </div>
+      </section>
+    )
+  }
+
+  if (isError || !latestAlbum) return <ErrorState />
+
+  const columns: TableColumn<AlbumTrack>[] = [
     {
       key: 'index',
       header: tAlbums('trackNumber'),
@@ -34,18 +56,9 @@ export function TopTracksSection({ artistId }: TopTracksSectionProps) {
       key: 'name',
       header: 'Track',
       render: (track) => (
-        <div className="flex items-center gap-3">
-          {track.album.images?.[0]?.url && (
-            <img
-              src={track.album.images[0].url}
-              alt={track.album.name}
-              className="w-8 h-8 rounded object-cover"
-            />
-          )}
-          <div>
-            <p className="font-medium text-text-primary">{track.name}</p>
-            <p className="text-xs text-text-secondary">{track.album.name}</p>
-          </div>
+        <div>
+          <p className="font-medium text-text-primary">{track.name}</p>
+          <p className="text-xs text-text-secondary">{latestAlbum.name}</p>
         </div>
       ),
     },
@@ -64,9 +77,9 @@ export function TopTracksSection({ artistId }: TopTracksSectionProps) {
       <h2 className="text-xl font-bold text-text-primary mb-4">{t('topTracks')}</h2>
       <Table
         columns={columns}
-        data={tracks ?? []}
-        isLoading={isLoading}
-        emptyMessage="No tracks available"
+        data={tracksData?.items ?? []}
+        isLoading={false}
+        emptyMessage={tAlbums('noTracks')}
         keyExtractor={(track) => track.id}
       />
     </section>
