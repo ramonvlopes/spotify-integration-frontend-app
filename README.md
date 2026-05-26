@@ -151,6 +151,7 @@ src/
 ## Next Steps
 
 - **E2E testing with Playwright** — the current test suite covers unit and component tests via Vitest + React Testing Library. The natural next layer is end-to-end testing. Playwright was chosen as the tool of choice due to its first-class TypeScript support, cross-browser coverage (Chromium, Firefox, WebKit), built-in network interception for mocking Spotify API responses, and a powerful locator API that aligns well with accessibility-first selectors. Priority flows to cover: artist search and navigation, favorites add/remove cycle, album modal open/close, and language toggle.
+- **CI/CD pipeline with GitHub Actions + Firebase Hosting** — automate the full build, lint, test, and deploy cycle on every push to `main`. The workflow would run `npm run lint`, `npm run test -- --run`, and `npm run build`, then deploy to Firebase Hosting via the official `FirebaseExtended/action-hosting-deploy` action using repository secrets for the Firebase token and Spotify credentials. Pull request previews would also be enabled, spinning up a temporary Firebase preview channel for every PR so reviewers can test changes live before merging.
 
 ---
 
@@ -315,6 +316,7 @@ src/
 ## Próximos Passos
 
 - **Testes E2E com Playwright** — a suíte atual cobre testes unitários e de componentes via Vitest + React Testing Library. A camada natural seguinte são testes end-to-end. O Playwright foi escolhido como ferramenta por seu suporte de primeira classe a TypeScript, cobertura multi-browser (Chromium, Firefox, WebKit), interceptação de rede nativa para mockar as respostas da API do Spotify e uma API de localizadores que se alinha bem com seletores orientados a acessibilidade. Fluxos prioritários a cobrir: busca e navegação de artistas, ciclo de adicionar/remover favoritos, abertura e fechamento do modal de álbum, e troca de idioma.
+- **Pipeline de CI/CD com GitHub Actions + Firebase Hosting** — automatizar o ciclo completo de build, lint, testes e deploy a cada push na `main`. O workflow executaria `npm run lint`, `npm run test -- --run` e `npm run build`, realizando o deploy no Firebase Hosting via a action oficial `FirebaseExtended/action-hosting-deploy` com secrets de repositório para o token do Firebase e as credenciais do Spotify. Previews para pull requests também seriam habilitados, criando um canal temporário no Firebase para cada PR e permitindo que revisores testem as alterações ao vivo antes do merge.
 
 ---
 
