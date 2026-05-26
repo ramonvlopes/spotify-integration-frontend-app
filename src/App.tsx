@@ -1,9 +1,10 @@
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { AppProvider } from '@/context/AppContext'
 import { SearchProvider } from '@/context/SearchContext'
+import { ArtistListScreen } from '@/screens/ArtistListScreen'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,9 +21,9 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <AppProvider>
           <SearchProvider>
-            <div className="min-h-screen bg-background text-text-primary">
-              <h1 className="text-primary text-2xl font-bold p-8">Spotify Explorer</h1>
-            </div>
+            <Routes>
+              <Route path="/" element={<ArtistListScreen />} />
+            </Routes>
             <ToastContainer
               position="bottom-right"
               theme="dark"
