@@ -3,7 +3,7 @@
   "searchByName": "Search by artist name",
   "searchByAlbum": "Search by album",
   "filterType": "Filter type",
-  "followers": "{{count}} followers",
+  "followers": "{{total}} followers",
   "genres": "Genres",
   "popularity": "Popularity",
   "topTracks": "Top Tracks",

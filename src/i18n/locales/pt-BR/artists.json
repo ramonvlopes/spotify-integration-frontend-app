@@ -3,7 +3,7 @@
   "searchByName": "Buscar por nome do artista",
   "searchByAlbum": "Buscar por álbum",
   "filterType": "Tipo de filtro",
-  "followers": "{{count}} seguidores",
+  "followers": "{{total}} seguidores",
   "genres": "Gêneros",
   "popularity": "Popularidade",
   "topTracks": "Músicas Mais Tocadas",

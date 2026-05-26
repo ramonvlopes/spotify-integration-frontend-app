@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { AppProvider } from '@/context/AppContext'
 import { SearchProvider } from '@/context/SearchContext'
 import { ArtistListScreen } from '@/screens/ArtistListScreen'
+import { ArtistDetailScreen } from '@/screens/ArtistDetailScreen'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,6 +24,7 @@ function App() {
           <SearchProvider>
             <Routes>
               <Route path="/" element={<ArtistListScreen />} />
+              <Route path="/artists/:id" element={<ArtistDetailScreen />} />
             </Routes>
             <ToastContainer
               position="bottom-right"
