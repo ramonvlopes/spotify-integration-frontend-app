@@ -39,6 +39,16 @@ A modern frontend application to explore Spotify artists, view their top tracks 
 
 ---
 
+## Known Limitations
+
+### Spotify Development Mode — API limit cap
+
+Spotify's Web API enforces a **maximum `limit` of 10** for apps running in development mode (unverified apps). This means pages display up to 10 items instead of 20. This is a Spotify platform restriction and does not affect production-approved apps.
+
+To remove this restriction, the Spotify app would need to request **Extended Quota Mode** in the Developer Dashboard, which requires Spotify's manual approval.
+
+---
+
 ## Authentication Strategy
 
 This app uses the **OAuth 2.0 Client Credentials** flow. A machine-to-machine token is fetched on the client using the `VITE_SPOTIFY_CLIENT_ID` and `VITE_SPOTIFY_CLIENT_SECRET` environment variables. This means **users do not need to log in with a Spotify account** to use the app.

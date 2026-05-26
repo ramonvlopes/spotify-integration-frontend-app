@@ -5,6 +5,6 @@ export const ARTISTS_ENDPOINTS = {
   ALBUMS: (id: string) => `/artists/${id}/albums`,
 } as const
 
-export const SEARCH_DEFAULT_LIMIT = 20
-export const ALBUMS_DEFAULT_LIMIT = 20
+export const SEARCH_DEFAULT_LIMIT = 10
+export const ALBUMS_DEFAULT_LIMIT = 10
 export const TOP_TRACKS_MARKET = 'BR'

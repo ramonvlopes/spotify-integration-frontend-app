@@ -12,7 +12,7 @@ import { QUERY_KEYS } from '@/commons/constants'
 import { useSearchContext } from '@/context/SearchContext'
 import type { ArtistGridProps } from './ArtistGrid.types'
 
-const PAGE_SIZE = 20
+const PAGE_SIZE = 10
 
 export function ArtistGrid({ onTotalChange }: ArtistGridProps) {
   const { t } = useTranslation('artists')

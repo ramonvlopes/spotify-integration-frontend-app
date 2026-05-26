@@ -5,7 +5,7 @@ import { ArtistGrid } from '@/containers/ArtistGrid'
 import { Pagination } from '@/components/Pagination'
 import { usePagination } from '@/hooks/usePagination'
 
-const PAGE_SIZE = 20
+const PAGE_SIZE = 10
 
 export function ArtistListScreen() {
   const [total, setTotal] = useState(0)
