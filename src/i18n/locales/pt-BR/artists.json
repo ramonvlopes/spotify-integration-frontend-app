@@ -9,5 +9,6 @@
   "topTracks": "Músicas Mais Tocadas",
   "discography": "Discografia",
   "noArtists": "Nenhum artista encontrado. Tente uma busca diferente.",
-  "searchPrompt": "Busque por um artista ou álbum para começar"
+  "searchToDiscover": "Busque para descobrir artistas e álbuns",
+  "searchPrompt": "Digite o nome de um artista ou álbum acima para ver os resultados"
 }

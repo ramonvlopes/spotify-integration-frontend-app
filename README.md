@@ -31,7 +31,7 @@ A futuristic dark-themed frontend application to explore Spotify artists and alb
 ## Features
 
 - **Artist & album search** — search by artist name or album name with 500ms debounce
-- **Featured content** — curated artist and album grids shown before any search
+- **Search-first home** — prominent search bar with ghost-card empty state guiding the user to type before results appear
 - **Paginated grid** — 10 items per page, glassmorphism card layout
 - **Artist detail** — cinematic hero, genres, followers, popularity bar, Spotify link
 - **Top tracks** — table with track name and duration from the latest album
@@ -55,7 +55,7 @@ Uses **OAuth 2.0 Client Credentials** flow — a machine-to-machine token fetche
 
 Spotify's Web API caps `limit` at **10** for unverified apps in development mode. Extended Quota Mode (removed with Spotify's approval) would lift this to 50.
 
-The batch `/artists?ids=` endpoint returns 403 in development mode — featured artists are fetched individually via `useQueries`.
+The batch `/artists?ids=` endpoint returns 403 in development mode and requires Spotify's Extended Quota Mode approval.
 
 ---
 
@@ -152,6 +152,9 @@ src/
 
 - **E2E testing with Playwright** — the current test suite covers unit and component tests via Vitest + React Testing Library. The natural next layer is end-to-end testing. Playwright was chosen as the tool of choice due to its first-class TypeScript support, cross-browser coverage (Chromium, Firefox, WebKit), built-in network interception for mocking Spotify API responses, and a powerful locator API that aligns well with accessibility-first selectors. Priority flows to cover: artist search and navigation, favorites add/remove cycle, album modal open/close, and language toggle.
 - **CI/CD pipeline with GitHub Actions + Firebase Hosting** — automate the full build, lint, test, and deploy cycle on every push to `main`. The workflow would run `npm run lint`, `npm run test -- --run`, and `npm run build`, then deploy to Firebase Hosting via the official `FirebaseExtended/action-hosting-deploy` action using repository secrets for the Firebase token and Spotify credentials. Pull request previews would also be enabled, spinning up a temporary Firebase preview channel for every PR so reviewers can test changes live before merging.
+- **Heatmap for interaction analytics** — integrate a heatmap tool (e.g. Hotjar or Microsoft Clarity) to capture click, scroll, and rage-click patterns across the search flow and artist detail pages. The data would inform UX iterations: understanding which parts of the interface users engage with most (search bar, genre tags, discography section) and where drop-offs occur, enabling evidence-based design decisions.
+- **Google Analytics for funnel analysis** — instrument the app with GA4 events to model the key user funnels: landing → search → artist detail → Spotify link click, and landing → favorites → favorites screen. Custom dimensions for search type (artist vs album), language preference, and result count would enable cohort analysis and identify friction points in the discovery flow.
+- **OpenTelemetry (OTEL) integration for observability** — add distributed tracing and structured log collection via the OpenTelemetry JS SDK. Instrument the Axios instance to emit spans for every Spotify API call (including token fetch latency and rate-limit retries), and export traces to a backend such as Grafana Tempo or Honeycomb. This would allow rapid root-cause analysis when failures occur in production — correlating a user-visible error with the exact API call, HTTP status, and response time that caused it.
 
 ---
 
@@ -196,7 +199,7 @@ Aplicação frontend com tema futurista escuro para explorar artistas e álbuns 
 ## Funcionalidades
 
 - **Busca de artistas e álbuns** — busca por nome de artista ou álbum com debounce de 500ms
-- **Conteúdo em destaque** — grades curadas de artistas e álbuns exibidas antes de qualquer busca
+- **Home search-first** — barra de busca em destaque com ghost cards no estado vazio, guiando o usuário a digitar antes de ver resultados
 - **Grade paginada** — 10 itens por página com layout de cards glassmorphism
 - **Detalhe do artista** — hero cinemático, gêneros, seguidores, barra de popularidade, link do Spotify
 - **Músicas mais tocadas** — tabela com nome da faixa e duração do álbum mais recente
@@ -220,7 +223,7 @@ Utiliza o fluxo **OAuth 2.0 Client Credentials** — token machine-to-machine ob
 
 A API do Spotify limita o `limit` a **10** para apps não verificados em modo de desenvolvimento. O Extended Quota Mode (liberado com aprovação do Spotify) aumentaria esse limite para 50.
 
-O endpoint batch `/artists?ids=` retorna 403 em modo de desenvolvimento — os artistas em destaque são buscados individualmente via `useQueries`.
+O endpoint batch `/artists?ids=` retorna 403 em modo de desenvolvimento e requer aprovação do Extended Quota Mode do Spotify.
 
 ---
 
@@ -317,6 +320,9 @@ src/
 
 - **Testes E2E com Playwright** — a suíte atual cobre testes unitários e de componentes via Vitest + React Testing Library. A camada natural seguinte são testes end-to-end. O Playwright foi escolhido como ferramenta por seu suporte de primeira classe a TypeScript, cobertura multi-browser (Chromium, Firefox, WebKit), interceptação de rede nativa para mockar as respostas da API do Spotify e uma API de localizadores que se alinha bem com seletores orientados a acessibilidade. Fluxos prioritários a cobrir: busca e navegação de artistas, ciclo de adicionar/remover favoritos, abertura e fechamento do modal de álbum, e troca de idioma.
 - **Pipeline de CI/CD com GitHub Actions + Firebase Hosting** — automatizar o ciclo completo de build, lint, testes e deploy a cada push na `main`. O workflow executaria `npm run lint`, `npm run test -- --run` e `npm run build`, realizando o deploy no Firebase Hosting via a action oficial `FirebaseExtended/action-hosting-deploy` com secrets de repositório para o token do Firebase e as credenciais do Spotify. Previews para pull requests também seriam habilitados, criando um canal temporário no Firebase para cada PR e permitindo que revisores testem as alterações ao vivo antes do merge.
+- **Heatmap para análise de interações** — integrar uma ferramenta de heatmap (ex.: Hotjar ou Microsoft Clarity) para capturar padrões de clique, scroll e rage-click no fluxo de busca e nas páginas de detalhe de artista. Os dados orientariam iterações de UX: entender quais partes da interface os usuários mais utilizam (barra de busca, tags de gênero, seção de discografia) e onde ocorrem abandonos, permitindo decisões de design baseadas em evidências.
+- **Google Analytics para análise de funis** — instrumentar o app com eventos GA4 para modelar os principais funis: landing → busca → detalhe do artista → clique no link do Spotify, e landing → favoritos → tela de favoritos. Dimensões customizadas para tipo de busca (artista vs álbum), preferência de idioma e contagem de resultados permitiriam análise de coortes e identificação de pontos de fricção no fluxo de descoberta.
+- **Integração com OpenTelemetry (OTEL) para observabilidade** — adicionar rastreamento distribuído e coleta de logs estruturados via OpenTelemetry JS SDK. Instrumentar a instância Axios para emitir spans em cada chamada à API do Spotify (incluindo latência do fetch de token e retentativas por rate limit), exportando os traces para um backend como Grafana Tempo ou Honeycomb. Isso permitiria análise rápida de causa raiz quando ocorrerem falhas em produção — correlacionando um erro visível ao usuário com a chamada de API exata, status HTTP e tempo de resposta que o causou.
 
 ---
 
