@@ -4,6 +4,8 @@
 
 A futuristic dark-themed frontend application to explore Spotify artists and albums, view discographies, and manage a personal favorites list — built as a Kanastra frontend hiring challenge.
 
+🔗 **Live demo:** [https://spotfy-integration-app.web.app](https://spotfy-integration-app.web.app/)
+
 ---
 
 ## Tech Stack
@@ -165,6 +167,8 @@ MIT
 > 🇺🇸 [English version above](#spotify-explorer)
 
 Aplicação frontend com tema futurista escuro para explorar artistas e álbuns do Spotify, visualizar discografias e gerenciar uma lista pessoal de favoritos — desenvolvida como desafio técnico frontend da Kanastra.
+
+🔗 **Visualizar projeto:** [https://spotfy-integration-app.web.app](https://spotfy-integration-app.web.app/)
 
 ---
 
