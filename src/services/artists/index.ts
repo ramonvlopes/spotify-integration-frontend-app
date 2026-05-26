@@ -2,6 +2,7 @@ export {
   searchArtists,
   searchArtistsByAlbum,
   getArtistById,
+  getArtistsByIds,
   getArtistTopTracks,
   getArtistAlbums,
 } from './artists'

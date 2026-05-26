@@ -1,4 +1,4 @@
-export { getAlbumById, getAlbumTracks, searchAlbums } from './albums'
+export { getAlbumById, getAlbumsByIds, getAlbumTracks, searchAlbums } from './albums'
 export type {
   AlbumDetail,
   AlbumTrack,

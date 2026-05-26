@@ -56,6 +56,13 @@ export async function getArtistById(id: string): Promise<Artist> {
   return response.data
 }
 
+export async function getArtistsByIds(ids: readonly string[]): Promise<Artist[]> {
+  const response = await api.get<{ artists: Artist[] }>(ARTISTS_ENDPOINTS.ARTISTS_BATCH, {
+    params: { ids: ids.join(',') },
+  })
+  return response.data.artists.filter(Boolean)
+}
+
 export async function getArtistTopTracks(artistId: string): Promise<Track[]> {
   const response = await api.get<TopTracksResponse>(ARTISTS_ENDPOINTS.TOP_TRACKS(artistId), {
     params: { market: TOP_TRACKS_MARKET },

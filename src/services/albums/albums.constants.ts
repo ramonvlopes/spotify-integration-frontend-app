@@ -1,5 +1,6 @@
 export const ALBUMS_ENDPOINTS = {
   ALBUM: (id: string) => `/albums/${id}`,
+  ALBUMS_BATCH: '/albums',
   TRACKS: (id: string) => `/albums/${id}/tracks`,
   SEARCH: '/search',
 } as const

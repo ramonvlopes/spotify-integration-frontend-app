@@ -1,6 +1,7 @@
 export const ARTISTS_ENDPOINTS = {
   SEARCH: '/search',
   ARTIST: (id: string) => `/artists/${id}`,
+  ARTISTS_BATCH: '/artists',
   TOP_TRACKS: (id: string) => `/artists/${id}/top-tracks`,
   ALBUMS: (id: string) => `/artists/${id}/albums`,
 } as const

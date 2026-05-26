@@ -18,7 +18,7 @@ const FEATURED_ALBUM_IDS = [
   '3T4tUhGYeRNVUGevb0wThu',
   '2dIGnmEIy1WZIcZCFSj6i8',
   '4yP0hdKOZPNshxUOjY0cZj',
-]
+] as const
 
 export function FeaturedAlbums() {
   const { t } = useTranslation('artists')

@@ -14,6 +14,13 @@ export async function getAlbumById(id: string): Promise<AlbumDetail> {
   return response.data
 }
 
+export async function getAlbumsByIds(ids: readonly string[]): Promise<AlbumDetail[]> {
+  const response = await api.get<{ albums: AlbumDetail[] }>(ALBUMS_ENDPOINTS.ALBUMS_BATCH, {
+    params: { ids: ids.join(',') },
+  })
+  return response.data.albums.filter(Boolean)
+}
+
 export async function getAlbumTracks(
   params: GetAlbumTracksParams,
 ): Promise<SpotifyPaginatedResponse<AlbumTrack>> {
