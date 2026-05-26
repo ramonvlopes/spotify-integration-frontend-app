@@ -146,6 +146,12 @@ src/
 
 ---
 
+## Next Steps
+
+- **E2E testing with Playwright** — the current test suite covers unit and component tests via Vitest + React Testing Library. The natural next layer is end-to-end testing. Playwright was chosen as the tool of choice due to its first-class TypeScript support, cross-browser coverage (Chromium, Firefox, WebKit), built-in network interception for mocking Spotify API responses, and a powerful locator API that aligns well with accessibility-first selectors. Priority flows to cover: artist search and navigation, favorites add/remove cycle, album modal open/close, and language toggle.
+
+---
+
 ## License
 
 MIT
@@ -299,6 +305,12 @@ src/
 - **Sem comentários inline** no código-fonte
 - **Pre-commit hook** (Husky + lint-staged): ESLint em todo `.ts`/`.tsx` staged
 - **Zero ESLint warnings** via `--max-warnings 0`
+
+---
+
+## Próximos Passos
+
+- **Testes E2E com Playwright** — a suíte atual cobre testes unitários e de componentes via Vitest + React Testing Library. A camada natural seguinte são testes end-to-end. O Playwright foi escolhido como ferramenta por seu suporte de primeira classe a TypeScript, cobertura multi-browser (Chromium, Firefox, WebKit), interceptação de rede nativa para mockar as respostas da API do Spotify e uma API de localizadores que se alinha bem com seletores orientados a acessibilidade. Fluxos prioritários a cobrir: busca e navegação de artistas, ciclo de adicionar/remover favoritos, abertura e fechamento do modal de álbum, e troca de idioma.
 
 ---
 
