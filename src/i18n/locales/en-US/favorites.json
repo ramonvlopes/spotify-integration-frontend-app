@@ -1,0 +1,18 @@
+{
+  "title": "My Favorites",
+  "addFavorite": "Add Favorite",
+  "artistName": "Artist name",
+  "trackName": "Track name",
+  "albumName": "Album name",
+  "save": "Save",
+  "noFavorites": "You haven't added any favorites yet.",
+  "remove": "Remove",
+  "added": "Added to favorites!",
+  "addedAt": "Added on {{date}}",
+  "validation": {
+    "artistRequired": "Artist name is required",
+    "trackRequired": "Track name is required",
+    "albumRequired": "Album name is required",
+    "minLength": "Must be at least {{min}} characters"
+  }
+}

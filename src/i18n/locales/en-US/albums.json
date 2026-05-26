@@ -1,0 +1,11 @@
+{
+  "tracks": "Tracks",
+  "releaseDate": "Release date",
+  "totalTracks": "{{count}} tracks",
+  "label": "Label",
+  "duration": "Duration",
+  "trackNumber": "#",
+  "noTracks": "No tracks available.",
+  "viewTracks": "View tracks",
+  "hideTracks": "Hide tracks"
+}

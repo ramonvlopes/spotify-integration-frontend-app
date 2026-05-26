@@ -1,0 +1,11 @@
+{
+  "tracks": "Músicas",
+  "releaseDate": "Data de lançamento",
+  "totalTracks": "{{count}} músicas",
+  "label": "Gravadora",
+  "duration": "Duração",
+  "trackNumber": "#",
+  "noTracks": "Nenhuma música disponível.",
+  "viewTracks": "Ver músicas",
+  "hideTracks": "Ocultar músicas"
+}

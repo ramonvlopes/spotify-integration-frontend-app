@@ -1,0 +1,13 @@
+{
+  "title": "Artists",
+  "searchByName": "Search by artist name",
+  "searchByAlbum": "Search by album",
+  "filterType": "Filter type",
+  "followers": "{{count}} followers",
+  "genres": "Genres",
+  "popularity": "Popularity",
+  "topTracks": "Top Tracks",
+  "discography": "Discography",
+  "noArtists": "No artists found. Try a different search.",
+  "searchPrompt": "Search for an artist or album to get started"
+}

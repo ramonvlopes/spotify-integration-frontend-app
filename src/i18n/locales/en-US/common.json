@@ -1,0 +1,16 @@
+{
+  "appName": "Spotify Explorer",
+  "loading": "Loading...",
+  "error": "Something went wrong",
+  "noResults": "No results found",
+  "search": "Search",
+  "back": "Back",
+  "seeOnSpotify": "See on Spotify",
+  "language": "Language",
+  "favorites": "Favorites",
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{current}} of {{total}}"
+  }
+}
