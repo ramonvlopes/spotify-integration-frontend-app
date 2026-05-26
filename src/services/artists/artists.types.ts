@@ -8,9 +8,9 @@ export interface Artist {
   id: string
   name: string
   images: ArtistImage[]
-  followers: { total: number }
-  genres: string[]
-  popularity: number
+  followers?: { total: number }
+  genres?: string[]
+  popularity?: number
   external_urls: { spotify: string }
 }
 

@@ -33,13 +33,17 @@ export function ArtistCard({
       </div>
       <div className="p-3 flex flex-col gap-2">
         <h3 className="font-semibold text-text-primary text-sm truncate">{name}</h3>
-        <div className="flex flex-wrap gap-1">
-          {genres.slice(0, 2).map((genre) => (
-            <Badge key={genre} label={genre} variant="genre" />
-          ))}
-        </div>
-        <p className="text-xs text-text-secondary">{formatFollowers(followers)} followers</p>
-        <PopularityBar value={popularity} />
+        {genres && genres.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            {genres.slice(0, 2).map((genre) => (
+              <Badge key={genre} label={genre} variant="genre" />
+            ))}
+          </div>
+        )}
+        {followers !== undefined && (
+          <p className="text-xs text-text-secondary">{formatFollowers(followers)} followers</p>
+        )}
+        {popularity !== undefined && <PopularityBar value={popularity} />}
       </div>
     </button>
   )

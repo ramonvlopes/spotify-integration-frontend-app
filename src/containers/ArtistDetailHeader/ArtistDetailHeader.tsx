@@ -48,21 +48,27 @@ export function ArtistDetailHeader({ artistId }: ArtistDetailHeaderProps) {
       )}
       <div className="relative z-10 p-6 md:p-8 flex flex-col gap-4 min-h-[200px] justify-end">
         <h1 className="text-3xl md:text-5xl font-bold text-text-primary">{artist.name}</h1>
-        <div className="flex flex-wrap gap-1.5">
-          {artist.genres.slice(0, 4).map((genre) => (
-            <Badge key={genre} label={genre} variant="genre" />
-          ))}
-        </div>
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-          <span className="text-text-secondary text-sm">
-            {t('followers', { total: formatFollowers(artist.followers.total) })}
-          </span>
-          <div className="sm:flex-1 max-w-xs">
-            <div className="flex items-center gap-2 text-sm text-text-secondary mb-1">
-              <span>{t('popularity')}</span>
-            </div>
-            <PopularityBar value={artist.popularity} />
+        {artist.genres && artist.genres.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {artist.genres.slice(0, 4).map((genre) => (
+              <Badge key={genre} label={genre} variant="genre" />
+            ))}
           </div>
+        )}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          {artist.followers?.total !== undefined && (
+            <span className="text-text-secondary text-sm">
+              {t('followers', { total: formatFollowers(artist.followers.total) })}
+            </span>
+          )}
+          {artist.popularity !== undefined && (
+            <div className="sm:flex-1 max-w-xs">
+              <div className="flex items-center gap-2 text-sm text-text-secondary mb-1">
+                <span>{t('popularity')}</span>
+              </div>
+              <PopularityBar value={artist.popularity} />
+            </div>
+          )}
           <a
             href={artist.external_urls.spotify}
             target="_blank"

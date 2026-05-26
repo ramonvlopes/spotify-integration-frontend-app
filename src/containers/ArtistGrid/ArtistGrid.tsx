@@ -77,7 +77,7 @@ export function ArtistGrid({ onTotalChange }: ArtistGridProps) {
           name={artist.name}
           imageUrl={artist.images?.[0]?.url}
           genres={artist.genres}
-          followers={artist.followers.total}
+          followers={artist.followers?.total}
           popularity={artist.popularity}
           onClick={(id) => navigate(`/artists/${id}`)}
         />
