@@ -16,7 +16,7 @@ export function TopTracksSection({ artistId }: TopTracksSectionProps) {
   const { t: tAlbums } = useTranslation('albums')
 
   const { data: albumsData, isLoading: albumsLoading } = useQuery({
-    queryKey: QUERY_KEYS.ARTIST_ALBUMS(artistId, 1),
+    queryKey: QUERY_KEYS.ARTIST_LATEST_ALBUM(artistId),
     queryFn: () => getArtistAlbums({ artistId, limit: 1, offset: 0 }),
   })
 

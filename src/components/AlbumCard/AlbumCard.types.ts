@@ -12,6 +12,7 @@ export interface Album {
   images: AlbumImage[]
   total_tracks: number
   external_urls: { spotify: string }
+  artists?: Array<{ id: string; name: string }>
 }
 
 export interface AlbumCardProps {

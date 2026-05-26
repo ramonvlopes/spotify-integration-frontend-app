@@ -5,7 +5,7 @@ import { AlbumCard } from '@/components/AlbumCard'
 import { Skeleton } from '@/components/Skeleton'
 import { Pagination } from '@/components/Pagination'
 import { ErrorState } from '@/components/ErrorState'
-import { ChevronDownIcon, ChevronUpIcon } from '@/commons/icons'
+import { Modal } from '@/components/Modal'
 import { getArtistAlbums } from '@/services/artists'
 import { QUERY_KEYS } from '@/commons/constants'
 import { AlbumTracksList } from './AlbumTracksList'
@@ -15,9 +15,8 @@ const PAGE_SIZE = 10
 
 export function AlbumSection({ artistId }: AlbumSectionProps) {
   const { t } = useTranslation('artists')
-  const { t: tAlbums } = useTranslation('albums')
   const [page, setPage] = useState(1)
-  const [expandedAlbumId, setExpandedAlbumId] = useState<string | null>(null)
+  const [selectedAlbum, setSelectedAlbum] = useState<{ id: string; name: string } | null>(null)
 
   const { data, isLoading, isError } = useQuery({
     queryKey: QUERY_KEYS.ARTIST_ALBUMS(artistId, page),
@@ -25,10 +24,6 @@ export function AlbumSection({ artistId }: AlbumSectionProps) {
   })
 
   const totalPages = Math.ceil((data?.total ?? 0) / PAGE_SIZE)
-
-  const toggleAlbum = (albumId: string) => {
-    setExpandedAlbumId((prev) => (prev === albumId ? null : albumId))
-  }
 
   if (isError) return <ErrorState />
 
@@ -48,18 +43,14 @@ export function AlbumSection({ artistId }: AlbumSectionProps) {
           ))}
         {!isLoading &&
           data?.items.map((album) => (
-            <div key={album.id} className="col-span-1">
-              <AlbumCard album={album} onClick={toggleAlbum} />
-              {expandedAlbumId === album.id && (
-                <div className="mt-2 col-span-full">
-                  <div className="flex items-center gap-1 text-sm text-primary mb-1">
-                    {expandedAlbumId === album.id ? <ChevronUpIcon /> : <ChevronDownIcon />}
-                    <span>{tAlbums('hideTracks')}</span>
-                  </div>
-                  <AlbumTracksList albumId={album.id} />
-                </div>
-              )}
-            </div>
+            <AlbumCard
+              key={album.id}
+              album={album}
+              onClick={(id) => {
+                const found = data?.items.find((a) => a.id === id)
+                setSelectedAlbum(found ? { id: found.id, name: found.name } : null)
+              }}
+            />
           ))}
       </div>
       <Pagination
@@ -68,6 +59,13 @@ export function AlbumSection({ artistId }: AlbumSectionProps) {
         onPageChange={setPage}
         isLoading={isLoading}
       />
+      <Modal
+        isOpen={!!selectedAlbum}
+        onClose={() => setSelectedAlbum(null)}
+        title={selectedAlbum?.name ?? ''}
+      >
+        {selectedAlbum && <AlbumTracksList albumId={selectedAlbum.id} />}
+      </Modal>
     </section>
   )
 }

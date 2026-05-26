@@ -1,2 +1,8 @@
-export { getAlbumById, getAlbumTracks } from './albums'
-export type { AlbumDetail, AlbumTrack, GetAlbumTracksParams } from './albums.types'
+export { getAlbumById, getAlbumTracks, searchAlbums } from './albums'
+export type {
+  AlbumDetail,
+  AlbumTrack,
+  GetAlbumTracksParams,
+  AlbumSearchResult,
+  SearchAlbumsParams,
+} from './albums.types'

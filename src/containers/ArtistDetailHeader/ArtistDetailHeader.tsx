@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { ExternalLinkIcon, MusicIcon } from '@/commons/icons'
+import { ExternalLinkIcon, HeartIcon, HeartOutlineIcon, MusicIcon } from '@/commons/icons'
 import { Badge } from '@/components/Badge'
 import { PopularityBar } from '@/components/PopularityBar'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
@@ -8,10 +8,13 @@ import { ErrorState } from '@/components/ErrorState'
 import { formatFollowers } from '@/commons/helpers/formatFollowers'
 import { getArtistById } from '@/services/artists'
 import { QUERY_KEYS } from '@/commons/constants'
+import { useFavorites } from '@/context/FavoritesContext'
 import type { ArtistDetailHeaderProps } from './ArtistDetailHeader.types'
 
 export function ArtistDetailHeader({ artistId }: ArtistDetailHeaderProps) {
   const { t } = useTranslation('artists')
+  const { t: tCommon } = useTranslation()
+  const { isArtistFavorited, toggleArtist } = useFavorites()
   const {
     data: artist,
     isLoading,
@@ -56,6 +59,30 @@ export function ArtistDetailHeader({ artistId }: ArtistDetailHeaderProps) {
           </div>
         )}
         <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          <button
+            onClick={() =>
+              toggleArtist({
+                id: artist.id,
+                name: artist.name,
+                imageUrl: artist.images?.[0]?.url,
+                genres: artist.genres,
+                followers: artist.followers?.total,
+                popularity: artist.popularity,
+              })
+            }
+            aria-label={
+              isArtistFavorited(artist.id)
+                ? tCommon('removeFromFavorites')
+                : tCommon('addToFavorites')
+            }
+            className={`flex items-center gap-1.5 text-sm transition-colors ${
+              isArtistFavorited(artist.id)
+                ? 'text-red-500'
+                : 'text-text-secondary hover:text-red-400'
+            }`}
+          >
+            {isArtistFavorited(artist.id) ? <HeartIcon /> : <HeartOutlineIcon />}
+          </button>
           {artist.followers?.total !== undefined && (
             <span className="text-text-secondary text-sm">
               {t('followers', { total: formatFollowers(artist.followers.total) })}
@@ -76,7 +103,7 @@ export function ArtistDetailHeader({ artistId }: ArtistDetailHeaderProps) {
             className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline"
           >
             <ExternalLinkIcon />
-            {t('../../common:seeOnSpotify', { defaultValue: 'See on Spotify' })}
+            {tCommon('seeOnSpotify')}
           </a>
         </div>
       </div>

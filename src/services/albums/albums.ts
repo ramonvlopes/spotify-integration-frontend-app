@@ -1,6 +1,12 @@
 import { api } from '../core/api'
 import { ALBUMS_ENDPOINTS, ALBUM_TRACKS_DEFAULT_LIMIT } from './albums.constants'
-import type { AlbumDetail, AlbumTrack, GetAlbumTracksParams } from './albums.types'
+import type {
+  AlbumDetail,
+  AlbumTrack,
+  GetAlbumTracksParams,
+  AlbumSearchResult,
+  SearchAlbumsParams,
+} from './albums.types'
 import type { SpotifyPaginatedResponse } from '../artists/artists.types'
 
 export async function getAlbumById(id: string): Promise<AlbumDetail> {
@@ -21,4 +27,21 @@ export async function getAlbumTracks(
     },
   )
   return response.data
+}
+
+export async function searchAlbums(
+  params: SearchAlbumsParams,
+): Promise<SpotifyPaginatedResponse<AlbumSearchResult>> {
+  const response = await api.get<{ albums: SpotifyPaginatedResponse<AlbumSearchResult> }>(
+    ALBUMS_ENDPOINTS.SEARCH,
+    {
+      params: {
+        q: params.query,
+        type: 'album',
+        limit: params.limit ?? 10,
+        offset: params.offset ?? 0,
+      },
+    },
+  )
+  return response.data.albums
 }
