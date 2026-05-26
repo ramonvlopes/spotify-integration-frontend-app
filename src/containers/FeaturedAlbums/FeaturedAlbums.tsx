@@ -25,9 +25,12 @@ export function FeaturedAlbums() {
   const navigate = useNavigate()
 
   const results = useQueries({
-    queries: FEATURED_ALBUM_IDS.map((id) => ({
+    queries: FEATURED_ALBUM_IDS.map((id, index) => ({
       queryKey: QUERY_KEYS.ALBUM(id),
-      queryFn: () => getAlbumById(id),
+      queryFn: async () => {
+        if (index > 0) await new Promise((r) => setTimeout(r, index * 300))
+        return getAlbumById(id)
+      },
       staleTime: 1000 * 60 * 10,
       retry: false,
     })),

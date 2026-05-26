@@ -12,9 +12,12 @@ export function FeaturedArtists() {
   const navigate = useNavigate()
 
   const results = useQueries({
-    queries: FEATURED_ARTIST_IDS.map((id) => ({
+    queries: FEATURED_ARTIST_IDS.map((id, index) => ({
       queryKey: QUERY_KEYS.ARTIST(id),
-      queryFn: () => getArtistById(id),
+      queryFn: async () => {
+        if (index > 0) await new Promise((r) => setTimeout(r, index * 300))
+        return getArtistById(id)
+      },
       staleTime: 1000 * 60 * 10,
       retry: false,
     })),
