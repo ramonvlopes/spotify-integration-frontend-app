@@ -7,8 +7,6 @@ import { AlbumCard } from '@/components/AlbumCard'
 import { Skeleton } from '@/components/Skeleton'
 import { EmptyState } from '@/components/EmptyState'
 import { ErrorState } from '@/components/ErrorState'
-import { FeaturedArtists } from '@/containers/FeaturedArtists'
-import { FeaturedAlbums } from '@/containers/FeaturedAlbums'
 import { searchArtists } from '@/services/artists'
 import { searchAlbums } from '@/services/albums'
 import { QUERY_KEYS } from '@/commons/constants'
@@ -48,9 +46,7 @@ export function ArtistGrid({ onTotalChange }: ArtistGridProps) {
     onTotalChange?.(data?.total ?? 0)
   }, [data?.total, onTotalChange])
 
-  if (!enabled) {
-    return searchType === 'artist' ? <FeaturedArtists /> : <FeaturedAlbums />
-  }
+  if (!enabled) return null
 
   if (isLoading) {
     return (

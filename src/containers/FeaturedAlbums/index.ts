@@ -1,1 +1,0 @@
-export { FeaturedAlbums } from './FeaturedAlbums'
